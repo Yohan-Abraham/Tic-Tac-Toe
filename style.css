@@ -22,4 +22,15 @@ body {
 
 .board div {
     border: 1px solid black;
+    font-size: 4em;
+    justify-items: center;
+    align-items: center;
+}
+
+.info {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 2em;
 }
