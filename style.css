@@ -32,10 +32,16 @@ body {
     justify-content: space-around;
     align-items: center;
     width: 100%;
-    margin-bottom: 2em;
+    margin-bottom: 1em;
 }
 
 .start {
-    border-radius: 5px;
-
+    border-radius: 10px;
+    margin-bottom: 2em;
+    background-color: black;
+    border: 1px solid white;
+    color: white;
+    font-size: 0.8em;
+    font-weight: bold;
+    padding: 1em;
 }
