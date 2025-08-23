@@ -89,6 +89,7 @@ const gameController = (function () {
         player2Pts.textContent = `Player 2 Points: ${player2.getPoints()}`
         currentPlayer = player1;
         displayPlayer.textContent = `${currentPlayer.name}'s Turn`;
+        play.remove();
         userNames.close();
     });
 
