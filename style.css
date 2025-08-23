@@ -34,3 +34,8 @@ body {
     width: 100%;
     margin-bottom: 2em;
 }
+
+.start {
+    border-radius: 5px;
+
+}

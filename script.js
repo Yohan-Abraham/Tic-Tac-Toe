@@ -50,11 +50,6 @@ const Player = function (name, indicator) {
 
 const gameController = (function () {
     const displayPlayer = document.querySelector(".player-turn");
-    // const player1Name = prompt("Enter Player 1 Name");
-
-
-    const player1 = Player("Yohan", "X");
-    const player2 = Player("Ebner", "O");
     const playerPick = document.querySelector(".board");
     const winSequences = [
         [0, 1, 2],
@@ -69,12 +64,38 @@ const gameController = (function () {
 
     const player1Pts = document.querySelector(".player1");
     const player2Pts = document.querySelector(".player2");
+    let player1Name;
+    let player2Name;
+    let player1;
+    let player2;
+    let currentPlayer;
+    const play = document.querySelector(".start");
+    const userNames = document.querySelector("#names");
+    const confirmBtn = document.querySelector("#confirmBtn");
+    const player1Input = document.querySelector("#player1");
+    const player2Input = document.querySelector("#player2");
 
-    player1Pts.textContent = `Player 1 Points: ${player1.getPoints()}`
-    player2Pts.textContent = `Player 2 Points: ${player2.getPoints()}`
+    play.addEventListener("click", () => {
+        userNames.showModal();
+    });
+    confirmBtn.addEventListener("click", (event) => {
+        event.preventDefault();
+        player1Name = player1Input.value;
+        player2Name = player2Input.value;
+        player1 = Player(player1Name, "X");
+        player2 = Player(player2Name, "O");
+
+        player1Pts.textContent = `Player 1 Points: ${player1.getPoints()}`
+        player2Pts.textContent = `Player 2 Points: ${player2.getPoints()}`
+        currentPlayer = player1;
+        displayPlayer.textContent = `${currentPlayer.name}'s Turn`;
+        userNames.close();
+    });
 
 
-    let currentPlayer = player1;
+
+
+
 
     //marks the cell player chose on click
     playerPick.addEventListener("click", (e) => {
@@ -85,18 +106,29 @@ const gameController = (function () {
         }
     });
 
-    displayPlayer.textContent = `${currentPlayer.name}'s Turn`;
+
 
     const playTurn = (index) => {
         if (gameBoard.setCell(index, currentPlayer.indicator)) {
             currentPlayer.addMap(index, currentPlayer.indicator);
-            gameWon();
-            _switchTurn();
+            if (gameWon()) {
+                gameWon();
+                _switchTurnWon(currentPlayer);
+            }
+            else {
+                _switchTurn();
+            }
         }
     }
 
     const _switchTurn = () => {
         currentPlayer = currentPlayer === player1 ? player2 : player1;
+        displayPlayer.textContent = `${currentPlayer.name}'s Turn`;
+    }
+
+    const _switchTurnWon = (winner) => {
+        currentPlayer = currentPlayer === player1 ? player2 : player1;
+        displayPlayer.textContent = `${winner.name} Wins!! ${currentPlayer.name}'s Turn.`;
     }
 
     const getCurrentPlayer = () => currentPlayer;
@@ -104,7 +136,6 @@ const gameController = (function () {
     const gameWon = () => {
         for (let sequences of winSequences) {
             if (sequences.every(index => getCurrentPlayer().hasKey(index, getCurrentPlayer().indicator))) {
-                displayPlayer.textContent = `${currentPlayer.name} Wins!!`;
                 currentPlayer.addPoint();
                 player1Pts.textContent = `Player 1 Points: ${player1.getPoints()}`
                 player2Pts.textContent = `Player 2 Points: ${player2.getPoints()}`

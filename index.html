@@ -11,11 +11,26 @@
 
 <body>
 
+    <button class="start">Play Game</button>
+
+    <dialog id="names">
+        <h2>Book Information</h2>
+        <form>
+            <label for="player1">Player 1 Name: </label>
+            <input id="player1" name="player1" type="text">
+
+            <label for="player2">Player 2 Name: </label>
+            <input type="text" id="player2" name="player2">
+
+            <button id="confirmBtn" type="submit">confirm</button>
+        </form>
+    </dialog>
+
     <div class="container">
         <div class="title">Tic Tac Toe</div>
         <div class="info">
             <h3 class="player1"></h3>
-            <h1 class="player-turn"></h1>
+            <h1 class="player-turn">Click Play Game to Start</h1>
             <h3 class="player2"></h3>
         </div>
         <div class="board">
