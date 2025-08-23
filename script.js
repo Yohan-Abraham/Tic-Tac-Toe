@@ -115,6 +115,9 @@ const gameController = (function () {
                 gameWon();
                 _switchTurnWon(currentPlayer);
             }
+            else if (gameOver()) {
+                _switchTurnTie();
+            }
             else {
                 _switchTurn();
             }
@@ -129,6 +132,11 @@ const gameController = (function () {
     const _switchTurnWon = (winner) => {
         currentPlayer = currentPlayer === player1 ? player2 : player1;
         displayPlayer.textContent = `${winner.name} Wins!! ${currentPlayer.name}'s Turn.`;
+    }
+
+    const _switchTurnTie = () => {
+        currentPlayer = currentPlayer === player1 ? player2 : player1;
+        displayPlayer.textContent = `It's a Tie! ${currentPlayer.name}'s Turn`;
     }
 
     const getCurrentPlayer = () => currentPlayer;
@@ -148,17 +156,22 @@ const gameController = (function () {
                 });
                 return true;
             }
-            else if (gameBoard.isFull()) {
-                displayPlayer.textContent = `It's a Tie!!`;
-                gameBoard.resetBoard();
-                player1.resetMap();
-                player2.resetMap();
-                const cells = document.querySelectorAll(".cell");
-                cells.forEach(cell => {
-                    cell.textContent = "";
-                });
-                return false;
-            }
+        }
+        return false;
+    }
+
+    const gameOver = () => {
+
+        if (gameBoard.isFull()) {
+            displayPlayer.textContent = `It's a Tie!!`;
+            gameBoard.resetBoard();
+            player1.resetMap();
+            player2.resetMap();
+            const cells = document.querySelectorAll(".cell");
+            cells.forEach(cell => {
+                cell.textContent = "";
+            });
+            return true;
         }
         return false;
     }
